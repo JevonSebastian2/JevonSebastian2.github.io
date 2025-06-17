@@ -22,7 +22,7 @@ body {
     color: var(--text-color);
     font-family: var(--font-body);
     overflow-x: hidden;
-    cursor: none;
+    
 }
 
 /* Kursor Kustom */
