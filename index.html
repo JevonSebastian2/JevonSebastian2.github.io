@@ -3,30 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jevon Sebastian - Portofolio</title>
+    <title>Jevon Sebastian - Design & Development</title>
+    <link rel="stylesheet" href="style.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div id="custom-cursor"></div>
+    <div class="cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-outline"></div>
+    </div>
 
     <nav>
         <div class="logo">Jevon.</div>
-        <div class="nav-links">
-            <a href="https://www.linkedin.com/in/jevonsebastian/" target="_blank" class="magnetic-btn">LinkedIn</a>
-        </div>
+        <a href="https://www.linkedin.com/in/jevonsebastian/" target="_blank" class="magnetic-btn">LinkedIn</a>
     </nav>
     
-    <div class="hero-container">
+    <header class="hero-container">
         <h1 class="hero-text">Creative Developer</h1>
-        <p class="hero-subtext">Mahasiswa Informatika di Telkom University dengan gairah dalam pengembangan perangkat lunak, analisis data, dan kepemimpinan. </p>
-    </div>
+        <p class="hero-subtext">Mahasiswa Informatika yang menggabungkan logika teknis dengan visi desain untuk menciptakan solusi digital yang berdampak.</p>
+    </header>
 
     <main class="main-content">
         
@@ -35,70 +34,64 @@
                 <img src="assets/profile.jpg" alt="Foto Jevon Sebastian">
             </div>
             <div class="about-text">
-                <h2>Tentang Saya</h2>
+                <div class="line-wrapper"><h2>Tentang Saya</h2></div>
                 <p>Saya adalah seorang problem-solver yang bersemangat, menggabungkan logika pemrograman dengan kreativitas desain. Dengan IPK saat ini 3.75 , saya berdedikasi untuk menciptakan solusi teknologi yang efisien dan berdampak, sambil mengasah kemampuan manajemen dan keuangan melalui pengalaman organisasi.</p>
             </div>
         </section>
 
-        <h2 class="section-title">Proyek Pilihan</h2>
-        <div id="horizontal-scroll-wrapper" style="height: 300vh;">
+        <div class="line-wrapper"><h2 class="section-title">Proyek Pilihan</h2></div>
+        
+        <div id="horizontal-scroll-wrapper">
             <div class="horizontal-scroll-section">
                 <div class="project-track">
                     
                     <div class="project-card">
                         <h3>Galvanized Steel Cutting Solver </h3>
                         <p>Aplikasi web untuk menghitung pemotongan baja paling optimal menggunakan algoritma brute-force dan dynamic programming. Dibangun dengan backend Flask. </p>
-                        <div class="tags"><span>Python </span><span>Flask </span><span>HTML </span></div>
                     </div>
 
                     <div class="project-card">
                         <h3>Indonesian Sentence Parser </h3>
                         <p>Parser untuk memvalidasi struktur kalimat Bahasa Indonesia (pola S-P-O-A) dengan antarmuka interaktif menggunakan Streamlit. </p>
-                        <div class="tags"><span>Python </span><span>Streamlit </span><span>NLP</span></div>
                     </div>
 
                     <div class="project-card">
                         <h3>Warehouse & Retail Database </h3>
-                        <p>Merancang dan mengimplementasikan database relasional SQL untuk mengelola operasi gudang, inventaris, dan transaksi retail secara efisien. </p>
-                        <div class="tags"><span>SQL </span><span>Database Design</span></div>
+                        <p>Merancang dan mengimplementasikan database relasional SQL untuk mengelola operasi gudang, inventaris, dan transaksi retail. </p>
                     </div>
                     
                     <div class="project-card">
-                        <h3>Doctor-Patient Link List System</h3>
+                        <h3>Doctor-Patient Link List System </h3>
                         <p>Sistem manajemen data dokter dan pasien menggunakan C++ dengan struktur data custom multi linked list untuk menangani relasi dinamis. </p>
-                        <div class="tags"><span>C++ </span><span>Data Structures </span></div>
                     </div>
 
                 </div>
             </div>
         </div>
-
-        <h2 class="section-title">Pengalaman</h2>
+        
+        <div class="line-wrapper"><h2 class="section-title">Pengalaman</h2></div>
         <section class="experience-grid">
             <div class="experience-item">
                 <h3>LCVP Finance, Governance, & Legality</h3>
                 <p class="company">AIESEC in Bandung (Feb 2025 - Sekarang) </p>
-                <p>Mengembangkan strategi finansial , mengawasi kepatuhan hukum dan keuangan , serta bersinergi untuk efisiensi biaya. </p>
             </div>
             <div class="experience-item">
                 <h3>Financial Planning & Analyst Officer</h3>
                 <p class="company">StudentsxCEOs Bandung (Nov 2024 - Sekarang) </p>
-                <p>Menganalisis realisasi anggaran  dan menyusun daftar mitra potensial untuk dukungan finansial. </p>
             </div>
             <div class="experience-item">
                 <h3>Organizing Committee Finance</h3>
                 <p class="company">Green Leaders, AIESEC (Juni 2024 - Feb 2025) </p>
-                <p>Mengelola keuangan proyek, berhasil menghasilkan revenue 9 Juta Rupiah , dan menganalisis risiko finansial. </p>
             </div>
         </section>
 
         <section class="contact-section">
-            <h2>Let's Talk</h2>
+            <div class="line-wrapper"><h2>Let's Talk</h2></div>
             <a href="mailto:j3vonsebastian@gmail.com" class="magnetic-btn">j3vonsebastian@gmail.com</a>
         </section>
-
     </main>
 
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     

@@ -1,67 +1,107 @@
-gsap.registerPlugin(ScrollTrigger);
+// Inisialisasi Smooth Scrolling dengan Lenis
+const lenis = new Lenis();
 
-// 1. EFEK REVEAL HERO SECTION
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+
+requestAnimationFrame(raf);
+
+// Hubungkan GSAP ScrollTrigger dengan Lenis
+gsap.registerPlugin(ScrollTrigger);
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time)=>{
+  lenis.raf(time * 1000);
+});
+gsap.ticker.lagSmoothing(0);
+
+
+// 1. ANIMASI HERO (SCALE & FADE)
 gsap.to(".hero-container", {
     scrollTrigger: {
         trigger: ".main-content",
-        start: "top bottom", // Saat bagian atas .main-content bertemu bagian bawah layar
+        start: "top bottom",
         end: "top top",
         scrub: 1,
     },
-    y: "-100vh", // Mendorong hero ke atas sejauh tinggi layar
-    ease: "none"
+    scale: 0.85,
+    opacity: 0,
+    ease: "power1.inOut"
 });
 
-// 2. EFEK HORIZONTAL SCROLL
+// 2. ANIMASI TEKS (REVEAL DARI BAWAH)
+const animatedHeadings = document.querySelectorAll(".line-wrapper h2");
+animatedHeadings.forEach(heading => {
+    gsap.to(heading, {
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: heading.parentElement,
+            start: "top 85%", // Mulai animasi saat 85% dari atas elemen terlihat
+        }
+    });
+});
+
+// 3. ANIMASI HORIZONTAL SCROLL
 const track = document.querySelector(".project-track");
 const wrapper = document.getElementById("horizontal-scroll-wrapper");
 
-// Pastikan elemen ada sebelum menjalankan animasi
 if (track && wrapper) {
+    let trackWidth = track.scrollWidth;
+    let amountToScroll = trackWidth - window.innerWidth;
+
     gsap.to(track, {
-        x: () => -(track.scrollWidth - window.innerWidth + window.innerWidth * 0.08), // Scroll sampai akhir track
+        x: -amountToScroll,
         ease: "none",
         scrollTrigger: {
             trigger: wrapper,
             start: "top top",
-            end: () => "+=" + (track.scrollWidth - window.innerWidth),
+            end: "+=" + amountToScroll,
             scrub: true,
-            pin: true, // "Pin" wrapper selama animasi horizontal
-            invalidateOnRefresh: true
+            pin: true,
+            invalidateOnRefresh: true,
         }
     });
 }
 
-// 3. EFEK KURSOR KUSTOM & TOMBOL MAGNETIK
-const cursor = document.getElementById('custom-cursor');
+// 4. KURSOR KUSTOM & TOMBOL MAGNETIK
+const cursorDot = document.querySelector(".cursor-dot");
+const cursorOutline = document.querySelector(".cursor-outline");
 const magneticButtons = document.querySelectorAll('.magnetic-btn');
 
-if (cursor) {
-    window.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
+window.addEventListener('mousemove', (e) => {
+    const { clientX, clientY } = e;
+    cursorDot.style.left = clientX + 'px';
+    cursorDot.style.top = clientY + 'px';
+    
+    gsap.to(cursorOutline, {
+        duration: 0.3,
+        left: clientX,
+        top: clientY,
+        ease: "power2.out"
     });
-}
+});
 
 magneticButtons.forEach(button => {
     button.addEventListener('mouseenter', () => {
-        if (cursor) cursor.classList.add('grow');
+        document.querySelector('.cursor').classList.add('grow');
     });
     button.addEventListener('mouseleave', () => {
-        if (cursor) cursor.classList.remove('grow');
+        document.querySelector('.cursor').classList.remove('grow');
     });
 
-    // Efek magnetik
     button.addEventListener('mousemove', (e) => {
         const rect = button.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
 
         gsap.to(button, {
-            x: x * 0.4,
-            y: y * 0.4,
+            x: x * 0.3,
+            y: y * 0.3,
             duration: 1,
-            ease: "elastic.out(1, 0.3)"
+            ease: "elastic.out(1, 0.4)"
         });
     });
 
@@ -70,7 +110,7 @@ magneticButtons.forEach(button => {
             x: 0,
             y: 0,
             duration: 1,
-            ease: "elastic.out(1, 0.3)"
+            ease: "elastic.out(1, 0.4)"
         });
     });
 });

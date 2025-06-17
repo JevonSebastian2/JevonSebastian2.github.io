@@ -1,12 +1,10 @@
-/* =================================
-   1. PENGATURAN DASAR & VARIABEL
-   ================================= */
 :root {
-    --bg-color: #0E0E0E;
-    --text-color: #E0E0E0;
-    --primary-color: #FFA500; /* Oranye sebagai aksen */
+    --bg-color: #121212;
+    --text-color: #EAEAEA;
+    --primary-color: #FFFFFF;
     --font-heading: 'Syne', sans-serif;
     --font-body: 'Inter', sans-serif;
+    --section-padding: 8rem 5%;
 }
 
 * {
@@ -27,52 +25,63 @@ body {
     cursor: none;
 }
 
-/* =================================
-   2. KURSOR KUSTOM & NAVIGASI
-   ================================= */
-#custom-cursor {
-    position: fixed;
-    width: 30px;
-    height: 30px;
-    border: 1px solid var(--text-color);
-    border-radius: 50%;
+/* Kursor Kustom */
+.cursor {
     pointer-events: none;
-    transform: translate(-50%, -50%);
-    transition: all 0.1s ease-out;
+    position: fixed;
     z-index: 9999;
 }
-
-#custom-cursor.grow {
-    width: 50px;
-    height: 50px;
+.cursor-dot {
+    position: fixed;
+    top: -5px; left: -5px;
+    width: 10px; height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+.cursor-outline {
+    position: fixed;
+    top: -15px; left: -15px;
+    width: 30px; height: 30px;
+    border: 1px solid var(--text-color);
+    border-radius: 50%;
+    transition: transform 0.2s ease-out;
+}
+.cursor.grow .cursor-outline {
+    transform: scale(2);
     background-color: var(--primary-color);
     border: none;
 }
 
+/* Navigasi */
 nav {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem 4%;
+    padding: 2rem 5%;
     z-index: 1000;
 }
-
 nav .logo {
     font-family: var(--font-heading);
     font-weight: 800;
     font-size: 1.5rem;
 }
+.magnetic-btn {
+    display: inline-block;
+    padding: 0.8rem 1.8rem;
+    border: 1px solid var(--text-color);
+    border-radius: 50px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    position: relative;
+    background-color: transparent;
+}
 
-/* =================================
-   3. HERO SECTION & EFEK REVEAL
-   ================================= */
+/* Hero Section */
 .hero-container {
-    position: sticky;
-    top: 0;
     height: 100vh;
     width: 100%;
     display: flex;
@@ -80,149 +89,144 @@ nav .logo {
     justify-content: center;
     align-items: center;
     text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
     z-index: 1;
 }
-
 .hero-text {
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 12vw, 10rem);
+    font-size: clamp(3.5rem, 12vw, 10rem);
     line-height: 0.9;
     font-weight: 800;
     text-transform: uppercase;
 }
-
 .hero-subtext {
-    font-size: 1rem;
-    margin-top: 1rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    margin-top: 1.5rem;
     max-width: 500px;
+    color: #aaa;
 }
 
+/* Konten Utama */
 .main-content {
     position: relative;
     z-index: 2;
     background-color: var(--bg-color);
-    padding-top: 5rem;
+    margin-top: 100vh; /* Memberi ruang untuk hero */
 }
 
-/* =================================
-   4. ABOUT & HORIZONTAL SCROLL SECTION
-   ================================= */
+/* Wrapper Animasi Teks */
+.line-wrapper {
+    overflow: hidden;
+    padding: 0.2rem;
+}
+.line-wrapper h2 {
+    transform: translateY(100%);
+}
+
+/* About & Horizontal Scroll */
 .about-section {
-    padding: 5rem 4%;
+    padding: var(--section-padding);
     display: flex;
-    gap: 2rem;
+    gap: 3rem;
     align-items: center;
 }
-
 .about-image img {
     width: 200px;
     height: 200px;
     object-fit: cover;
     border-radius: 50%;
 }
-
 .about-text h2 {
     font-family: var(--font-heading);
     font-size: 2.5rem;
     margin-bottom: 1rem;
 }
 
+#horizontal-scroll-wrapper {
+    width: 100%;
+    height: 300vh; /* Ketinggian untuk durasi scroll */
+}
 .horizontal-scroll-section {
-    height: 100vh; /* Ketinggian viewport */
+    height: 100vh;
+    width: 100%;
+    position: sticky;
+    top: 0;
     display: flex;
     align-items: center;
-    padding: 0 4%;
+    padding: 0 5%;
+    overflow: hidden;
 }
-
 .project-track {
     display: flex;
-    gap: 4rem;
+    gap: 5rem;
 }
-
 .project-card {
     flex-shrink: 0;
-    width: 50vw; /* Lebar kartu 50% dari lebar viewport */
-    max-width: 600px;
+    width: 40vw;
+    max-width: 500px;
 }
-
 .project-card h3 {
     font-family: var(--font-heading);
     font-size: 2rem;
-    margin: 1rem 0;
+    margin-bottom: 1rem;
 }
-
 .project-card p {
     color: #aaa;
 }
 
-.project-card .tags {
-    margin-top: 1rem;
-}
-
-.project-card .tags span {
-    display: inline-block;
-    padding: 5px 10px;
-    background-color: #222;
-    border-radius: 5px;
-    margin-right: 5px;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
+/* Pengalaman & Kontak */
 .section-title {
-    padding: 5rem 4% 2rem;
     font-family: var(--font-heading);
-    font-size: 4rem;
+    font-size: clamp(3rem, 8vw, 6rem);
+    padding: var(--section-padding);
+    padding-bottom: 4rem;
     text-align: center;
 }
 
-/* =================================
-   5. PENGALAMAN & KONTAK
-   ================================= */
 .experience-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    padding: 0 4% 5rem;
-}
-
-.experience-item {
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background-color: #333;
     border: 1px solid #333;
-    padding: 2rem;
-    border-radius: 10px;
+    margin: 0 5% 8rem;
 }
-
+.experience-item {
+    background-color: var(--bg-color);
+    padding: 2rem;
+}
 .experience-item h3 {
     font-family: var(--font-heading);
     font-size: 1.5rem;
 }
-
 .experience-item .company {
-    color: var(--primary-color);
-    font-weight: 700;
+    color: #aaa;
+    font-weight: 500;
     margin: 0.25rem 0 0.5rem;
     display: block;
 }
-
 .contact-section {
     text-align: center;
-    padding: 8rem 4%;
+    padding: var(--section-padding);
 }
-
 .contact-section h2 {
     font-family: var(--font-heading);
     font-size: clamp(3rem, 10vw, 8rem);
     margin-bottom: 2rem;
 }
 
-.magnetic-btn {
-    display: inline-block;
-    padding: 1rem 2rem;
-    border: 1px solid var(--text-color);
-    border-radius: 50px;
-    text-decoration: none;
-    color: var(--text-color);
-    transition: all 0.3s ease;
-    position: relative;
-    font-weight: 500;
+/* Responsif */
+@media (max-width: 768px) {
+    .about-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    .project-card {
+        width: 80vw;
+    }
+    .experience-grid {
+        grid-template-columns: 1fr;
+    }
 }
