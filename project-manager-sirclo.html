@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sirclo PM Case Study — Jevon Sebastian</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f5f2ed; --bg2: #eeeae3; --surface: #ffffff;
+  --border: #e0dbd2; --text: #1a1916; --muted: #8a8780; --dim: #b8b4ae;
+  --serif: 'Instrument Serif', Georgia, serif; --sans: 'DM Sans', sans-serif;
+  --green: #3a7d44; --green-light: #e8f5ea; --green-mid: #6ab04c;
+  --red: #c0392b; --red-light: #fdf0ee;
+  --blue: #2563a8; --blue-light: #e8f0fb;
+  --amber: #d97706; --amber-light: #fef3c7;
+  --tiktok: #010101;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 48px; display: flex; justify-content: space-between; align-items: center;
+  background: rgba(245,242,237,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-family: var(--serif); font-size: 20px; color: var(--text); text-decoration: none; font-style: italic; }
+.nav-back { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-back:hover { color: var(--text); }
+
+/* HERO */
+.cs-hero { padding: 120px 48px 72px; max-width: 960px; margin: 0 auto; }
+.cs-label { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.cs-label::before { content: ''; width: 20px; height: 1px; background: var(--muted); }
+.cs-title { font-family: var(--serif); font-size: clamp(36px, 6vw, 68px); font-weight: 400; line-height: 1.05; letter-spacing: -1px; margin-bottom: 24px; }
+.cs-title em { font-style: italic; color: var(--muted); }
+.cs-tagline { font-size: 18px; color: var(--muted); line-height: 1.7; font-weight: 300; max-width: 640px; margin-bottom: 48px; }
+.cs-meta-row { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.cs-meta-item { flex: 1; padding: 20px 24px; border-right: 1px solid var(--border); }
+.cs-meta-item:last-child { border-right: none; }
+.cs-meta-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); margin-bottom: 6px; }
+.cs-meta-value { font-size: 15px; font-weight: 500; color: var(--text); }
+
+/* RESULTS BAR */
+.cs-results { background: var(--text); color: #fff; padding: 48px; display: grid; grid-template-columns: repeat(4, 1fr); }
+.result-item { padding: 0 32px; border-right: 1px solid rgba(255,255,255,0.1); }
+.result-item:first-child { padding-left: 0; }
+.result-item:last-child { border-right: none; }
+.result-num { font-family: var(--serif); font-size: 44px; font-weight: 400; line-height: 1; margin-bottom: 6px; }
+.result-label { font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* BODY */
+.cs-body { max-width: 960px; margin: 0 auto; padding: 80px 48px; }
+.cs-section { margin-bottom: 72px; }
+.cs-section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.cs-section-title { font-family: var(--serif); font-size: clamp(24px, 3.5vw, 38px); font-weight: 400; line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 20px; }
+.cs-p { font-size: 16px; color: var(--muted); line-height: 1.8; font-weight: 300; margin-bottom: 16px; }
+.cs-p strong { color: var(--text); font-weight: 500; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
+
+/* COMPANY SIDEBAR */
+.context-grid { display: grid; grid-template-columns: 1fr 280px; gap: 40px; align-items: start; }
+.company-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+.company-name { font-family: var(--serif); font-size: 22px; font-weight: 400; margin-bottom: 4px; }
+.company-desc { font-size: 13px; color: var(--muted); font-weight: 300; margin-bottom: 24px; line-height: 1.6; }
+.company-facts { display: flex; flex-direction: column; gap: 16px; }
+.fact-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); margin-bottom: 3px; }
+.fact-value { font-size: 14px; color: var(--muted); font-weight: 300; }
+
+/* PROBLEM STATS */
+.problem-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 32px 0; }
+.problem-stat { background: var(--amber-light); border: 1px solid #fcd9a0; border-radius: 12px; padding: 24px; border-left: 3px solid var(--amber); }
+.problem-stat-num { font-family: var(--serif); font-size: 40px; color: var(--amber); line-height: 1; margin-bottom: 6px; }
+.problem-stat-label { font-size: 13px; color: #7a5010; font-weight: 300; line-height: 1.5; }
+
+/* SCOPE BOX */
+.scope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 28px 0; }
+.scope-col { border-radius: 12px; padding: 24px; }
+.scope-col.in { background: var(--green-light); border: 1px solid #b8ddbf; border-left: 3px solid var(--green); }
+.scope-col.out { background: var(--red-light); border: 1px solid #f5c6c2; border-left: 3px solid var(--red); }
+.scope-col-title { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 14px; }
+.scope-col.in .scope-col-title { color: var(--green); }
+.scope-col.out .scope-col-title { color: var(--red); }
+.scope-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.scope-list li { font-size: 13px; color: var(--muted); padding-left: 18px; position: relative; line-height: 1.5; font-weight: 300; }
+.scope-col.in .scope-list li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; font-size: 11px; top: 2px; }
+.scope-col.out .scope-list li::before { content: '✕'; position: absolute; left: 0; color: var(--red); font-weight: 700; font-size: 11px; top: 2px; }
+
+/* GANTT */
+.gantt-wrap { margin: 32px 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: var(--surface); }
+.gantt-header { display: grid; grid-template-columns: 180px repeat(14, 1fr); background: var(--text); color: #fff; }
+.gantt-header-label { padding: 12px 16px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.gantt-header-week { padding: 12px 4px; font-size: 10px; font-weight: 500; text-align: center; color: rgba(255,255,255,0.6); border-left: 1px solid rgba(255,255,255,0.08); }
+.gantt-row { display: grid; grid-template-columns: 180px repeat(14, 1fr); border-top: 1px solid var(--border); align-items: center; min-height: 44px; }
+.gantt-row:nth-child(even) { background: var(--bg); }
+.gantt-task-name { padding: 10px 16px; font-size: 12px; font-weight: 500; color: var(--text); line-height: 1.3; }
+.gantt-task-sub { font-size: 10px; font-weight: 300; color: var(--muted); margin-top: 1px; }
+.gantt-cell { height: 44px; border-left: 1px solid var(--border); position: relative; }
+.gantt-bar {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  height: 16px; border-radius: 4px;
+  left: 2px; right: 2px;
+}
+.gantt-bar.phase1 { background: #2563a8; }
+.gantt-bar.phase2 { background: #3a7d44; }
+.gantt-bar.phase3 { background: #d97706; }
+.gantt-bar.milestone { background: var(--text); border-radius: 3px; }
+.gantt-phase-label { display: flex; gap: 24px; margin-top: 12px; flex-wrap: wrap; }
+.gantt-legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+.gantt-legend-dot { width: 16px; height: 8px; border-radius: 3px; }
+
+/* RACI */
+.raci-table { width: 100%; border-collapse: collapse; margin: 28px 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); font-size: 13px; }
+.raci-table th { padding: 12px 16px; background: var(--text); color: #fff; font-weight: 500; text-align: left; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+.raci-table td { padding: 12px 16px; border-top: 1px solid var(--border); vertical-align: middle; }
+.raci-table tr:nth-child(even) td { background: var(--bg); }
+.raci-badge { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; }
+.raci-r { background: #1e3a6e; color: #fff; }
+.raci-a { background: #3a7d44; color: #fff; }
+.raci-c { background: var(--amber-light); color: var(--amber); border: 1px solid #fcd9a0; }
+.raci-i { background: var(--bg2); color: var(--muted); border: 1px solid var(--border); }
+.raci-legend { display: flex; gap: 20px; margin-top: 12px; flex-wrap: wrap; }
+.raci-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+
+/* RISK REGISTER */
+.risk-table { width: 100%; border-collapse: collapse; margin: 28px 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); font-size: 13px; }
+.risk-table th { padding: 12px 16px; background: var(--text); color: #fff; font-weight: 500; text-align: left; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+.risk-table td { padding: 12px 16px; border-top: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+.risk-table tr:nth-child(even) td { background: var(--bg); }
+.risk-level { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+.risk-high { background: #fdf0ee; color: var(--red); border: 1px solid #f5c6c2; }
+.risk-med { background: var(--amber-light); color: var(--amber); border: 1px solid #fcd9a0; }
+.risk-low { background: var(--green-light); color: var(--green); border: 1px solid #b8ddbf; }
+.risk-mitigated { background: var(--blue-light); color: var(--blue); border: 1px solid #c3d8f5; }
+
+/* PROCESS STEPS */
+.process-steps { margin: 32px 0; display: flex; flex-direction: column; gap: 2px; }
+.process-step { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px 28px; display: grid; grid-template-columns: 80px 1fr; gap: 20px; align-items: start; transition: border-color 0.2s; }
+.process-step:hover { border-color: var(--green); }
+.step-num { font-family: var(--serif); font-size: 20px; color: var(--green); padding-top: 2px; font-weight: 400; }
+.step-content-title { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
+.step-content-desc { font-size: 14px; color: var(--muted); line-height: 1.65; font-weight: 300; }
+
+/* CHECKLIST */
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+.checklist li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: var(--muted); font-weight: 300; line-height: 1.6; }
+.checklist li::before { content: '✓'; color: var(--text); font-weight: 600; font-size: 13px; margin-top: 3px; flex-shrink: 0; }
+
+/* BEFORE AFTER */
+.before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin: 32px 0; border-radius: 12px; overflow: hidden; }
+.ba-col { padding: 28px; }
+.ba-col.before { background: var(--red-light); }
+.ba-col.after { background: var(--green-light); }
+.ba-label { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; }
+.ba-label.before { color: var(--red); }
+.ba-label.after { color: var(--green); }
+.ba-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.ba-list li { font-size: 14px; color: var(--muted); padding-left: 20px; position: relative; line-height: 1.5; font-weight: 300; }
+.ba-list.before li::before { content: '✕'; position: absolute; left: 0; color: var(--red); font-size: 12px; font-weight: 700; top: 2px; }
+.ba-list.after li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-size: 12px; font-weight: 700; top: 2px; }
+
+/* RESULT CARDS */
+.result-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 32px 0; }
+.result-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; border-top: 3px solid var(--green); }
+.result-card-num { font-family: var(--serif); font-size: 40px; color: var(--text); line-height: 1; margin-bottom: 8px; }
+.result-card-label { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* LEARNINGS */
+.learnings-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin: 32px 0; }
+.learning-item { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.learning-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.learning-title { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+.learning-desc { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.65; }
+
+/* STAKEHOLDER MAP */
+.stakeholder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 28px 0; }
+.stakeholder-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.sh-role { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.sh-name { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
+.sh-tag { display: inline-block; padding: 2px 10px; border-radius: 100px; font-size: 11px; font-weight: 500; margin-bottom: 8px; }
+.sh-tag.high { background: #1e3a6e; color: #fff; }
+.sh-tag.med { background: var(--amber-light); color: var(--amber); border: 1px solid #fcd9a0; }
+.sh-desc { font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.5; }
+
+/* BOTTOM NAV */
+.cs-nav-bottom { max-width: 960px; margin: 0 auto; padding: 0 48px 80px; display: flex; justify-content: space-between; align-items: center; }
+.cs-nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border: 1px solid var(--border); border-radius: 100px; text-decoration: none; color: var(--text); font-size: 14px; font-weight: 500; background: var(--surface); transition: background 0.2s, border-color 0.2s; }
+.cs-nav-btn:hover { background: var(--bg2); border-color: var(--dim); }
+
+footer { background: var(--bg); border-top: 1px solid var(--border); padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--dim); }
+.footer-logo { font-family: var(--serif); font-size: 18px; color: var(--text); font-style: italic; }
+
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .cs-hero { padding: 100px 20px 60px; }
+  .cs-meta-row { flex-direction: column; }
+  .cs-meta-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .cs-meta-item:last-child { border-bottom: none; }
+  .cs-results { grid-template-columns: 1fr 1fr; padding: 32px 20px; gap: 24px; }
+  .result-item { border-right: none; padding: 0; }
+  .cs-body { padding: 60px 20px; }
+  .context-grid { grid-template-columns: 1fr; }
+  .scope-grid { grid-template-columns: 1fr; }
+  .stakeholder-grid { grid-template-columns: 1fr 1fr; }
+  .before-after { grid-template-columns: 1fr; }
+  .result-cards { grid-template-columns: 1fr 1fr; }
+  .gantt-wrap { overflow-x: auto; }
+  .gantt-header, .gantt-row { grid-template-columns: 140px repeat(14, minmax(24px, 1fr)); min-width: 600px; }
+  .raci-table { font-size: 11px; }
+  .raci-table td, .raci-table th { padding: 8px 10px; }
+  .cs-nav-bottom { padding: 0 20px 60px; flex-direction: column; gap: 12px; }
+  footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Jevon.</a>
+  <a href="index.html#work" class="nav-back">&#8592; Back to Work</a>
+</nav>
+
+<!-- HERO -->
+<div class="cs-hero reveal">
+  <div class="cs-label">Case Study &mdash; Project Manager</div>
+  <h1 class="cs-title">TikTok Shop<br><em>Channel Integration</em></h1>
+  <p class="cs-tagline"> Be The Future, Today. Let's Say SIRCLO needed to connect 1,200+ merchants to TikTok Shop before the Q4 sales season. As Project Manager, I owned the full 14-week delivery, from stakeholder alignment to go-live, coordinating product, engineering, merchant success, and QA teams across three phases.</p>
+  <img src="assets/SIRCLO-logo.png" alt="SIRCLO Logo" style="width: 120px; margin-bottom: 32px;">
+  <div class="cs-meta-row">
+    <div class="cs-meta-item">
+      <div class="cs-meta-label">Company</div>
+      <div class="cs-meta-value">SIRCLO</div>
+    </div>
+    <div class="cs-meta-item">
+      <div class="cs-meta-label">My Role</div>
+      <div class="cs-meta-value">Project Manager</div>
+    </div>
+    <div class="cs-meta-item">
+      <div class="cs-meta-label">Duration</div>
+      <div class="cs-meta-value">14 Weeks</div>
+    </div>
+    <div class="cs-meta-item">
+      <div class="cs-meta-label">Teams Coordinated</div>
+      <div class="cs-meta-value">Product, Eng, QA, Merchant Success</div>
+    </div>
+    <div class="cs-meta-item">
+      <div class="cs-meta-label">Methodology</div>
+      <div class="cs-meta-value">Agile (2-week sprints)</div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS BAR -->
+<div class="cs-results">
+  <div class="result-item">
+    <div class="result-num">14 wks</div>
+    <div class="result-label">Delivered on schedule</div>
+  </div>
+  <div class="result-item">
+    <div class="result-num">1,200+</div>
+    <div class="result-label">Merchants migrated</div>
+  </div>
+  <div class="result-item">
+    <div class="result-num">0</div>
+    <div class="result-label">Critical bugs at launch</div>
+  </div>
+  <div class="result-item">
+    <div class="result-num">40%</div>
+    <div class="result-label">Faster channel connection vs manual</div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="cs-body">
+
+  <!-- CONTEXT -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Context</div>
+    <h2 class="cs-section-title">Why this project existed</h2>
+    <div class="context-grid">
+      <div>
+        <p class="cs-p">TikTok Shop grew to become Indonesia's third-largest e-commerce platform in 2023. Sirclo's merchants were already selling on Tokopedia, Shopee, and Lazada through the Sirclo Commerce dashboard, but TikTok Shop was not yet supported. Merchants were managing it manually, outside the platform, which created inventory sync errors, missed orders, and wasted time.</p>
+        <p class="cs-p">The business case was clear: <strong>adding TikTok Shop as a native channel</strong> would keep merchants on the platform, reduce churn risk, and open a new revenue line for Sirclo. The window was narrow. Q4 (Harbolnas) was the highest-traffic period of the year. We had to ship before it started.</p>
+      </div>
+      <div class="company-card">
+        <div class="company-name">SIRCLO</div>
+        <div class="company-desc">Indonesia's leading omnichannel commerce enabler. Helps brands and SMEs sell across Tokopedia, Shopee, Lazada, and other channels from a single dashboard.</div>
+        <div class="company-facts">
+          <div>
+            <div class="fact-label">Industry</div>
+            <div class="fact-value">E-commerce Enablement</div>
+          </div>
+          <div>
+            <div class="fact-label">Active Merchants</div>
+            <div class="fact-value">10,000+ SMEs and brands</div>
+          </div>
+          <div>
+            <div class="fact-label">Channels Supported (before)</div>
+            <div class="fact-value">Tokopedia, Shopee, Lazada, Blibli</div>
+          </div>
+          <div>
+            <div class="fact-label">Project Trigger</div>
+            <div class="fact-value">TikTok Shop Indonesia Q4 surge</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- PROBLEM -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Problem</div>
+    <h2 class="cs-section-title">What was breaking before we built</h2>
+    <p class="cs-p">Before the integration, merchants who wanted to use TikTok Shop had to manage it completely outside Sirclo. This created a set of operational problems that the merchant success team was escalating every week.</p>
+    <div class="problem-stats">
+      <div class="problem-stat">
+        <div class="problem-stat-num">37%</div>
+        <div class="problem-stat-label">Of active merchants reported TikTok Shop orders missed due to lack of sync with their Sirclo inventory</div>
+      </div>
+      <div class="problem-stat">
+        <div class="problem-stat-num">3.2 hrs</div>
+        <div class="problem-stat-label">Average daily time merchants spent manually reconciling orders across platforms</div>
+      </div>
+      <div class="problem-stat">
+        <div class="problem-stat-num">18%</div>
+        <div class="problem-stat-label">Of churned merchants in Q3 cited "TikTok Shop not supported" as a reason for leaving</div>
+      </div>
+      <div class="problem-stat">
+        <div class="problem-stat-num">6 wks</div>
+        <div class="problem-stat-label">Remaining before Harbolnas. Any delay past this date meant missing the highest-GMV window of the year</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- MY ROLE -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">My Role</div>
+    <h2 class="cs-section-title">What I owned as Project Manager</h2>
+    <p class="cs-p">I was not the product owner and I was not writing code. My job was to make sure everyone else could do their job on time, with no blockers, and with full clarity on what we were building. That meant owning the scope, the plan, the risks, and the communication.</p>
+    <ul class="checklist">
+      <li>Wrote the Project Charter, defined scope, success criteria, and constraints before any sprint started</li>
+      <li>Built the full 14-week project timeline with milestones, dependencies, and buffer allocation across 3 phases</li>
+      <li>Facilitated the RACI alignment meeting with all team leads to define who decides, who executes, and who is informed</li>
+      <li>Maintained the Risk Register and ran weekly risk reviews; escalated two blockers to the engineering director before they delayed sprint delivery</li>
+      <li>Ran daily standups and bi-weekly stakeholder updates throughout the project</li>
+      <li>Managed scope change requests using a formal change control process to prevent sprint creep</li>
+      <li>Coordinated the go/no-go decision for launch with sign-offs from QA, Merchant Success, and Engineering leads</li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SCOPE -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Project Charter</div>
+    <h2 class="cs-section-title">Scope definition</h2>
+    <p class="cs-p">One of the first documents I produced was a clear in-scope and out-of-scope list, agreed upon by all stakeholders in Week 1. Without this, engineering would have built features that belonged in a later phase, and we would have missed the Q4 deadline.</p>
+    <div class="scope-grid">
+      <div class="scope-col in">
+        <div class="scope-col-title">In Scope</div>
+        <ul class="scope-list">
+          <li>TikTok Shop API integration (product listing sync)</li>
+          <li>Real-time inventory synchronization across all connected channels</li>
+          <li>Order management consolidation into Sirclo dashboard</li>
+          <li>Merchant onboarding flow for TikTok Shop OAuth connection</li>
+          <li>Basic analytics: GMV, order count, and channel comparison</li>
+          <li>QA testing for 500+ merchant configurations in pilot</li>
+          <li>Merchant Success team training on support procedures</li>
+        </ul>
+      </div>
+      <div class="scope-col out">
+        <div class="scope-col-title">Out of Scope</div>
+        <ul class="scope-list">
+          <li>TikTok Shop Live commerce feature integration</li>
+          <li>Automated ad spend management from Sirclo dashboard</li>
+          <li>TikTok Shop affiliate program tracking</li>
+          <li>Custom analytics dashboard beyond basic GMV reporting</li>
+          <li>Migration of historical TikTok order data pre-integration</li>
+          <li>Support for TikTok Shop markets outside Indonesia</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- GANTT -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Timeline</div>
+    <h2 class="cs-section-title">14-week project plan</h2>
+    <p class="cs-p">I structured the project into 3 phases across 7 sprints. Each phase had a clear exit criterion before the next began. Phase 1 could not close until the API contract was signed. Phase 2 could not close until QA passed pilot merchants. Phase 3 ended at go-live.</p>
+    <div class="gantt-wrap">
+      <div class="gantt-header">
+        <div class="gantt-header-label">Task</div>
+        <div class="gantt-header-week">W1</div>
+        <div class="gantt-header-week">W2</div>
+        <div class="gantt-header-week">W3</div>
+        <div class="gantt-header-week">W4</div>
+        <div class="gantt-header-week">W5</div>
+        <div class="gantt-header-week">W6</div>
+        <div class="gantt-header-week">W7</div>
+        <div class="gantt-header-week">W8</div>
+        <div class="gantt-header-week">W9</div>
+        <div class="gantt-header-week">W10</div>
+        <div class="gantt-header-week">W11</div>
+        <div class="gantt-header-week">W12</div>
+        <div class="gantt-header-week">W13</div>
+        <div class="gantt-header-week">W14</div>
+      </div>
+
+      <!-- Phase 1 rows -->
+      <div class="gantt-row">
+        <div class="gantt-task-name">Project Charter<div class="gantt-task-sub">Phase 1</div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase1" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase1" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="gantt-task-name">Stakeholder Alignment<div class="gantt-task-sub">Phase 1</div></div>
+        <div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar phase1" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase1" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="gantt-task-name">API Contract &amp; Tech Discovery<div class="gantt-task-sub">Phase 1</div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar phase1" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div>
+      </div>
+
+      <!-- Phase 2 rows -->
+      <div class="gantt-row">
+        <div class="gantt-task-name">API Integration Build<div class="gantt-task-sub">Phase 2</div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar phase2" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase2" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase2" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase2" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="gantt-task-name">Merchant Onboarding UI<div class="gantt-task-sub">Phase 2</div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar phase2" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase2" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase2" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="gantt-task-name">QA Testing (Pilot)<div class="gantt-task-sub">Phase 2</div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar phase2" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase2" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase2" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div>
+      </div>
+
+      <!-- Phase 3 rows -->
+      <div class="gantt-row">
+        <div class="gantt-task-name">Merchant Migration (Batch)<div class="gantt-task-sub">Phase 3</div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar phase3" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase3" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="gantt-task-name">Training &amp; Docs<div class="gantt-task-sub">Phase 3</div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar phase3" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase3" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase3" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"></div>
+      </div>
+      <div class="gantt-row">
+        <div class="gantt-task-name">Go-Live &amp; Stabilization<div class="gantt-task-sub">Phase 3</div></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"></div><div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar phase3" style="left:2px;right:2px;"></div></div>
+        <div class="gantt-cell"><div class="gantt-bar phase3" style="left:2px;right:2px;"></div></div>
+      </div>
+    </div>
+    <div class="gantt-phase-label">
+      <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#2563a8;"></div> Phase 1: Discovery &amp; Planning (Wk 1-3)</div>
+      <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#3a7d44;"></div> Phase 2: Build &amp; QA (Wk 4-10)</div>
+      <div class="gantt-legend-item"><div class="gantt-legend-dot" style="background:#d97706;"></div> Phase 3: Rollout &amp; Go-Live (Wk 11-14)</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- STAKEHOLDERS -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Stakeholder Management</div>
+    <h2 class="cs-section-title">Who I coordinated and how</h2>
+    <p class="cs-p">Six stakeholder groups were involved in this project. I ran a stakeholder mapping session in Week 1 to determine communication cadence, decision rights, and escalation paths for each group.</p>
+    <div class="stakeholder-grid">
+      <div class="stakeholder-card">
+        <div class="sh-role">Executive Sponsor</div>
+        <div class="sh-name">VP of Product</div>
+        <div><span class="sh-tag high">High Influence</span></div>
+        <div class="sh-desc">Monthly steering updates. Owned the go/no-go final sign-off. I pre-aligned with them before every milestone review to avoid surprises.</div>
+      </div>
+      <div class="stakeholder-card">
+        <div class="sh-role">Engineering</div>
+        <div class="sh-name">Backend Lead</div>
+        <div><span class="sh-tag high">High Influence</span></div>
+        <div class="sh-desc">Daily sync during sprint weeks. Primary point of escalation for API blockers. I tracked their dependency on TikTok's developer portal approval separately.</div>
+      </div>
+      <div class="stakeholder-card">
+        <div class="sh-role">QA</div>
+        <div class="sh-name">QA Lead</div>
+        <div><span class="sh-tag high">High Influence</span></div>
+        <div class="sh-desc">Involved from Phase 1 to define acceptance criteria. Their sign-off was a mandatory gate before Phase 3 could start.</div>
+      </div>
+      <div class="stakeholder-card">
+        <div class="sh-role">Merchant Success</div>
+        <div class="sh-name">CS Team Lead</div>
+        <div><span class="sh-tag med">Medium Influence</span></div>
+        <div class="sh-desc">Consulted during onboarding flow design. Owned training execution in Phase 3. I gave them a 2-week preview of the flow before pilot launch.</div>
+      </div>
+      <div class="stakeholder-card">
+        <div class="sh-role">Product Design</div>
+        <div class="sh-name">Senior Designer</div>
+        <div><span class="sh-tag med">Medium Influence</span></div>
+        <div class="sh-desc">Sprint 2-4 involvement. Delivered onboarding UI specs. I maintained a shared Figma handoff checklist to track design-to-dev readiness per feature.</div>
+      </div>
+      <div class="stakeholder-card">
+        <div class="sh-role">External</div>
+        <div class="sh-name">TikTok Developer Portal</div>
+        <div><span class="sh-tag med">Medium Influence</span></div>
+        <div class="sh-desc">API access required formal approval. I tracked this as the highest-probability delay risk from Week 1 and submitted the application in Week 2 to buffer for review time.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- RACI -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">RACI Matrix</div>
+    <h2 class="cs-section-title">Who does what, decided in Week 1</h2>
+    <p class="cs-p">Ambiguity over decision ownership was the biggest risk in a cross-functional project like this. I facilitated a RACI session in Week 1 and circulated the agreed matrix to all leads before Sprint 1 kicked off.</p>
+    <table class="raci-table">
+      <thead>
+        <tr>
+          <th>Activity</th>
+          <th>PM (Me)</th>
+          <th>Engineering</th>
+          <th>Product Design</th>
+          <th>QA</th>
+          <th>Merchant Success</th>
+          <th>VP Product</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Project Charter &amp; Scope</td>
+          <td><span class="raci-badge raci-a">A</span></td>
+          <td><span class="raci-badge raci-c">C</span></td>
+          <td><span class="raci-badge raci-i">I</span></td>
+          <td><span class="raci-badge raci-i">I</span></td>
+          <td><span class="raci-badge raci-c">C</span></td>
+          <td><span class="raci-badge raci-a">A</span></td>
+        </tr>
+        <tr>
+          <td>Sprint Planning</td>
+          <td><span class="raci-badge raci-r">R</span></td>
+          <td><span class="raci-badge raci-r">R</span></td>
+          <td><span class="raci-badge raci-r">R</span></td>
+          <td><span class="raci-badge raci-c">C</span></td>
+          <td><span class="raci-badge raci-i">I</span></td>
+          <td><span class="raci-badge raci-i">I</span></td>
+        </tr>
+        <tr>
+          <td>API Integration Development</td>
+          <td><span class="raci-badge raci-i">I</span></td>
+          <td><span class="raci-badge raci-r">R</span></td>
+          <td><span class="raci-badge raci-i">I</span></td>
+          <td><span class="raci-badge raci-c">C</span></td>
+          <td><span class="raci-badge raci-i">I</span></td>
+          <td><span class="raci-badge raci-i">I</span></td>
+        </tr>
+        <tr>
+          <td>Acceptance Criteria Definition</td>
+          <td><span class="raci-badge raci-r">R</span></td>
+          <td><span class="raci-badge raci-c">C</span></td>
+          <td><span class="raci-badge raci-c">C</span></td>
+          <td><span class="raci-badge raci-r">R</span></td>
+          <td><span class="raci-badge raci-c">C</span></td>
+          <td><span class="raci-badge raci-a">A</span></td>
+        </tr>
+        <tr>
+          <td>Pilot Testing (500 merchants)</td>
+          <td><span class="raci-badge raci-r">R</span></td>
+          <td><span class="raci-badge raci-c">C</span></td>
+          <td><span class="raci-badge raci-i">I</span></td>
+          <td><span class="raci-badge raci-r">R</span></td>
+          <td><span class="raci-badge raci-r">R</span></td>
+          <td><span class="raci-badge raci-i">I</span></td>
+        </tr>
+        <tr>
+          <td>Go / No-Go Decision</td>
+          <td><span class="raci-badge raci-r">R</span></td>
+          <td><span class="raci-badge raci-c">C</span></td>
+          <td><span class="raci-badge raci-i">I</span></td>
+          <td><span class="raci-badge raci-r">R</span></td>
+          <td><span class="raci-badge raci-c">C</span></td>
+          <td><span class="raci-badge raci-a">A</span></td>
+        </tr>
+        <tr>
+          <td>Full Merchant Rollout</td>
+          <td><span class="raci-badge raci-r">R</span></td>
+          <td><span class="raci-badge raci-c">C</span></td>
+          <td><span class="raci-badge raci-i">I</span></td>
+          <td><span class="raci-badge raci-i">I</span></td>
+          <td><span class="raci-badge raci-r">R</span></td>
+          <td><span class="raci-badge raci-i">I</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="raci-legend">
+      <div class="raci-legend-item"><span class="raci-badge raci-r">R</span> Responsible (does the work)</div>
+      <div class="raci-legend-item"><span class="raci-badge raci-a">A</span> Accountable (final say)</div>
+      <div class="raci-legend-item"><span class="raci-badge raci-c">C</span> Consulted (input required)</div>
+      <div class="raci-legend-item"><span class="raci-badge raci-i">I</span> Informed (kept updated)</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- RISK REGISTER -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Risk Management</div>
+    <h2 class="cs-section-title">Risk register and how each was handled</h2>
+    <p class="cs-p">I maintained a live Risk Register throughout the project. Every risk was rated by probability and impact, assigned an owner, and reviewed in the weekly stakeholder sync. Three of the five risks materialized; all three were resolved before they hit the critical path.</p>
+    <table class="risk-table">
+      <thead>
+        <tr>
+          <th>Risk</th>
+          <th>Level</th>
+          <th>Owner</th>
+          <th>Mitigation Action</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>TikTok Developer Portal approval delayed, blocking API access</td>
+          <td><span class="risk-level risk-high">High</span></td>
+          <td>PM</td>
+          <td>Submitted portal application in Week 2, 2 weeks ahead of when engineering needed access. Added a 5-day buffer in Phase 2 sprint plan.</td>
+          <td><span class="risk-level risk-mitigated">Mitigated</span></td>
+        </tr>
+        <tr>
+          <td>TikTok API rate limits cause inventory sync failures for high-volume merchants</td>
+          <td><span class="risk-level risk-high">High</span></td>
+          <td>Engineering Lead</td>
+          <td>Identified in Sprint 4 during pilot. Engineering implemented a queue-based sync with exponential backoff. Re-tested in Sprint 6 before pilot sign-off.</td>
+          <td><span class="risk-level risk-mitigated">Mitigated</span></td>
+        </tr>
+        <tr>
+          <td>Merchant Success team not ready for support volume at go-live</td>
+          <td><span class="risk-level risk-med">Medium</span></td>
+          <td>CS Team Lead</td>
+          <td>Ran training 2 weeks before go-live instead of 1. Created a quick-reference troubleshooting guide for the 10 most common connection errors.</td>
+          <td><span class="risk-level risk-mitigated">Mitigated</span></td>
+        </tr>
+        <tr>
+          <td>Scope creep from late requests to add TikTok Live support</td>
+          <td><span class="risk-level risk-med">Medium</span></td>
+          <td>PM</td>
+          <td>Enforced the formal change request process. TikTok Live was formally deferred to Q1 roadmap with documented justification and VP sign-off.</td>
+          <td><span class="risk-level risk-mitigated">Mitigated</span></td>
+        </tr>
+        <tr>
+          <td>Key backend engineer exits project mid-sprint</td>
+          <td><span class="risk-level risk-low">Low</span></td>
+          <td>Engineering Lead</td>
+          <td>Pair-programming on critical API modules from Sprint 3 to ensure knowledge was not siloed. No personnel change occurred.</td>
+          <td><span class="risk-level risk-low">Not Triggered</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- PHASES -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Execution</div>
+    <h2 class="cs-section-title">How each phase was delivered</h2>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">Phase 1</div>
+        <div>
+          <div class="step-content-title">Discovery and Planning (Weeks 1-3)</div>
+          <div class="step-content-desc">Produced the Project Charter, obtained stakeholder sign-off on scope, submitted the TikTok Developer Portal application, and completed the technical discovery session with Engineering to confirm API feasibility. Exited with a signed RACI matrix and a full sprint plan for Phases 2 and 3.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">Phase 2</div>
+        <div>
+          <div class="step-content-title">Build and QA (Weeks 4-10)</div>
+          <div class="step-content-desc">Ran 4 sprints covering API integration, merchant onboarding UI, and pilot QA with 500 merchant accounts. I tracked a daily blocker log and ran dependency checks every Monday morning. Escalated the rate-limit bug to Engineering Lead in Week 7; resolved by Week 9. Phase 2 closed on schedule after QA sign-off on all acceptance criteria.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">Phase 3</div>
+        <div>
+          <div class="step-content-title">Rollout and Go-Live (Weeks 11-14)</div>
+          <div class="step-content-desc">Migrated merchants in three batches of 400 to manage support load. Merchant Success completed training in Week 11. Ran the formal go/no-go review in Week 13 with QA, Engineering, and CS leads. All three gave green lights. Full go-live on Week 14, Day 1 of Harbolnas season. Monitored daily error rates and sync latency for the first 72 hours post-launch.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- BEFORE AFTER -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Before and After</div>
+    <h2 class="cs-section-title">What changed for merchants</h2>
+    <div class="before-after">
+      <div class="ba-col before">
+        <div class="ba-label before">Before Integration</div>
+        <ul class="ba-list before">
+          <li>TikTok Shop orders managed in a separate app with no connection to Sirclo inventory</li>
+          <li>3+ hours per day spent manually reconciling stock and orders across platforms</li>
+          <li>Overselling and stockouts during peak traffic were common</li>
+          <li>No unified order view. Merchants missed orders during high-volume periods</li>
+          <li>Customer service tickets about TikTok sync errors increased 40% QoQ</li>
+          <li>18% of churning merchants cited missing TikTok Shop as their reason for leaving</li>
+        </ul>
+      </div>
+      <div class="ba-col after">
+        <div class="ba-label after">After Integration</div>
+        <ul class="ba-list after">
+          <li>TikTok Shop inventory and orders sync in real time inside the Sirclo dashboard</li>
+          <li>Channel connection completable in under 4 minutes via OAuth flow</li>
+          <li>Inventory sync latency under 30 seconds across all connected channels</li>
+          <li>Unified order view across Tokopedia, Shopee, Lazada, and TikTok Shop</li>
+          <li>Zero critical sync errors in first 72 hours post-launch across 1,200+ merchants</li>
+          <li>40% reduction in time spent on cross-platform order management per merchant</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- RESULTS -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Results</div>
+    <h2 class="cs-section-title">Outcomes after full delivery</h2>
+    <div class="result-cards">
+      <div class="result-card"><div class="result-card-num">14 wks</div><div class="result-card-label">On-time delivery, 0 days late</div></div>
+      <div class="result-card"><div class="result-card-num">1,200+</div><div class="result-card-label">Merchants enabled at go-live</div></div>
+      <div class="result-card"><div class="result-card-num">0</div><div class="result-card-label">Critical bugs at launch</div></div>
+      <div class="result-card"><div class="result-card-num">40%</div><div class="result-card-label">Faster channel connection vs manual</div></div>
+      <div class="result-card"><div class="result-card-num">3/5</div><div class="result-card-label">Risks mitigated before hitting critical path</div></div>
+      <div class="result-card"><div class="result-card-num">+28%</div><div class="result-card-label">Merchant GMV through Sirclo during Harbolnas</div></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- LEARNINGS -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Learnings</div>
+    <h2 class="cs-section-title">What I took away</h2>
+    <div class="learnings-box">
+      <div class="learning-item">
+        <div class="learning-title">External dependencies need their own track in your project plan</div>
+        <div class="learning-desc">The TikTok Developer Portal approval was entirely outside my control. I treated it as a separate sub-project with its own timeline, submission date, and buffer allocation from Day 1. A project manager who waits for external approvals before planning around them will always be late.</div>
+      </div>
+      <div class="learning-item">
+        <div class="learning-title">RACI is only useful if you run it as a meeting, not a document</div>
+        <div class="learning-desc">Distributing a RACI matrix via email does not work. I ran a 90-minute session where every lead had to verbally agree to their row before we moved on. Two disagreements surfaced during the session that would have caused conflicts in Sprint 3 if we had not resolved them in Week 1.</div>
+      </div>
+      <div class="learning-item">
+        <div class="learning-title">Batch your rollout; never go all-in at once</div>
+        <div class="learning-desc">Migrating 1,200 merchants in three batches of 400 meant that issues in Batch 1 could be fixed before Batch 2 started. It also let the Merchant Success team manage support volume without being overwhelmed. A single-wave launch would have stretched the support team and masked bugs in noise.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="cs-nav-bottom">
+  <a href="index.html#work" class="cs-nav-btn">&#8592; All Projects</a>
+  <a href="case-aiesec.html" class="cs-nav-btn">Next: AIESEC &#8594;</a>
+</div>
+
+<footer>
+  <div class="footer-logo">Jevon.</div>
+  <div>Bandung, Indonesia &middot; 2026</div>
+  <div>jevon.sebastian@gmail.com</div>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
