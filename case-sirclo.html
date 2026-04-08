@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sirclo Case Study — Jevon Sebastian</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f5f2ed; --bg2: #eeeae3; --surface: #ffffff;
+  --border: #e0dbd2; --text: #1a1916; --muted: #8a8780; --dim: #b8b4ae;
+  --serif: 'Instrument Serif', Georgia, serif; --sans: 'DM Sans', sans-serif;
+  --green: #3a7d44; --green-light: #e8f5ea; --green-mid: #6ab04c;
+  --red: #c0392b; --red-light: #fdf0ee;
+  --blue: #2563a8; --blue-light: #e8f0fb;
+  --amber: #d97706; --amber-light: #fef3c7;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 48px; display: flex; justify-content: space-between; align-items: center;
+  background: rgba(245,242,237,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-family: var(--serif); font-size: 20px; color: var(--text); text-decoration: none; font-style: italic; }
+.nav-back { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-back:hover { color: var(--text); }
+
+/* HERO */
+.cs-hero { padding: 120px 48px 72px; max-width: 960px; margin: 0 auto; }
+.cs-label { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.cs-label::before { content: ''; width: 20px; height: 1px; background: var(--muted); }
+.cs-title { font-family: var(--serif); font-size: clamp(36px, 6vw, 68px); font-weight: 400; line-height: 1.05; letter-spacing: -1px; margin-bottom: 24px; }
+.cs-title em { font-style: italic; color: var(--muted); }
+.cs-tagline { font-size: 18px; color: var(--muted); line-height: 1.7; font-weight: 300; max-width: 640px; margin-bottom: 48px; }
+.cs-meta-row { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.cs-meta-item { flex: 1; padding: 20px 24px; border-right: 1px solid var(--border); }
+.cs-meta-item:last-child { border-right: none; }
+.cs-meta-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); margin-bottom: 6px; }
+.cs-meta-value { font-size: 15px; font-weight: 500; color: var(--text); }
+
+/* RESULTS BAR */
+.cs-results { background: var(--text); color: #fff; padding: 48px; display: grid; grid-template-columns: repeat(4, 1fr); }
+.result-item { padding: 0 32px; border-right: 1px solid rgba(255,255,255,0.1); }
+.result-item:first-child { padding-left: 0; }
+.result-item:last-child { border-right: none; }
+.result-num { font-family: var(--serif); font-size: 44px; font-weight: 400; line-height: 1; margin-bottom: 6px; }
+.result-label { font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* BODY */
+.cs-body { max-width: 960px; margin: 0 auto; padding: 80px 48px; }
+.cs-section { margin-bottom: 72px; }
+.cs-section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.cs-section-title { font-family: var(--serif); font-size: clamp(24px, 3.5vw, 38px); font-weight: 400; line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 20px; }
+.cs-p { font-size: 16px; color: var(--muted); line-height: 1.8; font-weight: 300; margin-bottom: 16px; }
+.cs-p strong { color: var(--text); font-weight: 500; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
+
+/* COMPANY INFO SIDEBAR */
+.context-grid { display: grid; grid-template-columns: 1fr 280px; gap: 40px; align-items: start; }
+.company-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+.company-name { font-family: var(--serif); font-size: 22px; font-weight: 400; margin-bottom: 4px; }
+.company-desc { font-size: 13px; color: var(--muted); font-weight: 300; margin-bottom: 24px; line-height: 1.6; }
+.company-facts { display: flex; flex-direction: column; gap: 16px; }
+.fact-item {}
+.fact-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); margin-bottom: 3px; }
+.fact-value { font-size: 14px; color: var(--muted); font-weight: 300; }
+
+/* PROBLEM STATS */
+.problem-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 32px 0; }
+.problem-stat { background: var(--red-light); border: 1px solid #f5c6c2; border-radius: 12px; padding: 24px; border-left: 3px solid var(--red); }
+.problem-stat-num { font-family: var(--serif); font-size: 40px; color: var(--red); line-height: 1; margin-bottom: 6px; }
+.problem-stat-label { font-size: 13px; color: #7a3030; font-weight: 300; line-height: 1.5; }
+
+/* GOAL TREE DIAGRAM */
+.goal-tree { margin: 40px 0; }
+.goal-tree-root { display: flex; justify-content: center; margin-bottom: 0; }
+.goal-root-box {
+  background: var(--green); color: #fff; border-radius: 10px;
+  padding: 16px 40px; font-size: 16px; font-weight: 600; text-align: center;
+  box-shadow: 0 4px 20px rgba(58,125,68,0.3);
+  position: relative;
+}
+.goal-root-box::after {
+  content: ''; position: absolute; bottom: -28px; left: 50%; transform: translateX(-50%);
+  width: 2px; height: 28px; background: #333;
+}
+.goal-tree-connector { display: flex; justify-content: space-between; padding: 0 5%; position: relative; margin-top: 28px; }
+.goal-tree-connector::before {
+  content: ''; position: absolute; top: 0; left: 5%; right: 5%;
+  height: 2px; background: #333;
+}
+.goal-branch { display: flex; flex-direction: column; align-items: center; flex: 1; }
+.goal-branch-line { width: 2px; height: 32px; background: #333; }
+.goal-branch-arrow { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid #333; margin-bottom: 12px; }
+.goal-leaf {
+  background: var(--green-mid); color: #fff; border-radius: 10px;
+  padding: 16px 12px; font-size: 13px; font-weight: 500; text-align: center;
+  width: 90%; line-height: 1.4;
+}
+
+/* HYPOTHESIS BOX */
+.hypothesis-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin: 32px 0; border-left: 3px solid var(--text); }
+.hypothesis-box p { font-size: 16px; color: var(--text); line-height: 1.75; font-style: italic; }
+
+/* PERSONA CARD */
+.persona-wrap { margin: 32px 0; border-radius: 16px; overflow: hidden; background: linear-gradient(135deg, #3a7d8a 0%, #2e4d6b 100%); padding: 32px; }
+.persona-inner { display: grid; grid-template-columns: 200px 1fr; gap: 24px; align-items: stretch; }
+.persona-avatar { background: rgba(255,255,255,0.12); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.persona-avatar-icon { width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; }
+.persona-card { background: #fff; border-radius: 12px; padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.persona-header { grid-column: 1 / -1; padding-bottom: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; }
+.persona-name { font-family: var(--serif); font-size: 26px; font-weight: 400; }
+.persona-attrs { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.persona-attr { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.persona-attr-icon { font-size: 14px; }
+.persona-right { display: flex; flex-direction: column; gap: 20px; }
+.tech-section {}
+.tech-label { font-size: 13px; font-weight: 600; color: #3a7d8a; margin-bottom: 10px; }
+.tech-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.tech-row-name { font-size: 12px; color: var(--muted); }
+.tech-dots { display: flex; gap: 3px; }
+.dot { width: 14px; height: 14px; border-radius: 50%; background: var(--border); }
+.dot.filled { background: #3a7d8a; }
+.wants-section {}
+.wants-label { font-size: 13px; font-weight: 600; color: #3a7d8a; margin-bottom: 10px; }
+.wants-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.wants-list li { font-size: 12px; color: var(--muted); padding-left: 14px; position: relative; line-height: 1.5; }
+.wants-list li::before { content: '•'; position: absolute; left: 0; color: #3a7d8a; }
+.frustrations-label { font-size: 13px; font-weight: 600; color: #c0392b; margin-bottom: 10px; }
+.persona-bio { grid-column: 1 / 2; }
+.bio-label { font-size: 13px; font-weight: 600; color: #3a7d8a; border-bottom: 2px solid #3a7d8a; display: inline-block; padding-bottom: 2px; margin-bottom: 10px; }
+.bio-text { font-size: 12px; color: var(--muted); line-height: 1.65; font-weight: 300; }
+
+/* USER STORY TABLE */
+.user-story-table { margin: 32px 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+.ust-header { display: grid; grid-template-columns: 120px 1fr 1fr 1fr; }
+.ust-header-cell { padding: 14px 20px; font-size: 13px; font-weight: 600; }
+.ust-header-cell.epic { background: #9e9e9e; color: #fff; }
+.ust-header-cell.story { background: #6b8fc4; color: #fff; }
+.ust-header-cell.criteria { background: #6aaa7a; color: #fff; }
+.ust-row { display: grid; grid-template-columns: 120px 1fr 1fr 1fr; border-top: 1px solid var(--border); }
+.ust-row:last-child {}
+.ust-cell { padding: 16px 20px; font-size: 13px; line-height: 1.6; }
+.ust-cell.backlog { background: #e8e8e8; display: flex; align-items: center; justify-content: center; }
+.backlog-label { font-weight: 700; font-size: 14px; color: #555; writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); }
+.ust-cell.epic-cell { background: #fef3c7; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 13px; font-weight: 500; color: #92400e; }
+.ust-cell.story-cell { background: #e0eaf8; font-size: 13px; color: #1e3a6e; line-height: 1.6; }
+.ust-cell.criteria-cell { background: #e8f5ea; font-size: 13px; color: #1a4a2a; line-height: 1.6; }
+
+/* CHECKLIST */
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+.checklist li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: var(--muted); font-weight: 300; line-height: 1.6; }
+.checklist li::before { content: '✓'; color: var(--text); font-weight: 600; font-size: 13px; margin-top: 3px; flex-shrink: 0; }
+
+/* PROCESS STEPS */
+.process-steps { margin: 32px 0; display: flex; flex-direction: column; gap: 2px; }
+.process-step { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px 28px; display: grid; grid-template-columns: 60px 1fr; gap: 20px; align-items: start; transition: border-color 0.2s; }
+.process-step:hover { border-color: var(--green); }
+.step-num { font-family: var(--serif); font-size: 22px; color: var(--green); padding-top: 2px; font-weight: 400; }
+.step-content-title { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
+.step-content-desc { font-size: 14px; color: var(--muted); line-height: 1.65; font-weight: 300; }
+
+/* NORTH STAR DIAGRAM */
+.north-star { margin: 32px 0; }
+.ns-grid { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0; align-items: center; }
+.ns-inputs { display: flex; flex-direction: column; gap: 12px; }
+.ns-box { border-radius: 10px; padding: 14px 18px; font-size: 13px; text-align: center; line-height: 1.4; }
+.ns-box.input { background: var(--blue-light); color: var(--blue); border: 1px solid #c3d8f5; font-weight: 500; }
+.ns-box.middle { background: var(--amber-light); color: var(--amber); border: 1px solid #fcd9a0; font-weight: 500; }
+.ns-box.output { background: var(--green); color: #fff; font-weight: 700; padding: 20px; font-size: 14px; box-shadow: 0 4px 20px rgba(58,125,68,0.25); }
+.ns-box.outcome { background: var(--surface); color: var(--text); border: 2px solid var(--border); font-weight: 500; }
+.ns-arrow { font-size: 22px; color: var(--dim); text-align: center; padding: 0 8px; }
+.ns-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); text-align: center; margin-bottom: 8px; }
+
+/* BEFORE AFTER */
+.before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin: 32px 0; border-radius: 12px; overflow: hidden; }
+.ba-col { padding: 28px; }
+.ba-col.before { background: var(--red-light); }
+.ba-col.after { background: var(--green-light); }
+.ba-label { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; }
+.ba-label.before { color: var(--red); }
+.ba-label.after { color: var(--green); }
+.ba-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.ba-list li { font-size: 14px; color: var(--muted); padding-left: 20px; position: relative; line-height: 1.5; font-weight: 300; }
+.ba-list.before li::before { content: '✕'; position: absolute; left: 0; color: var(--red); font-size: 12px; font-weight: 700; top: 2px; }
+.ba-list.after li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-size: 12px; font-weight: 700; top: 2px; }
+
+/* RESULT CARDS */
+.result-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 32px 0; }
+.result-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; border-top: 3px solid var(--green); }
+.result-card-num { font-family: var(--serif); font-size: 40px; color: var(--text); line-height: 1; margin-bottom: 8px; }
+.result-card-label { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* LEARNINGS */
+.learnings-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin: 32px 0; }
+.learning-item { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.learning-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.learning-title { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+.learning-desc { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.65; }
+
+/* BOTTOM NAV */
+.cs-nav-bottom { max-width: 960px; margin: 0 auto; padding: 0 48px 80px; display: flex; justify-content: space-between; align-items: center; }
+.cs-nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border: 1px solid var(--border); border-radius: 100px; text-decoration: none; color: var(--text); font-size: 14px; font-weight: 500; background: var(--surface); transition: background 0.2s, border-color 0.2s; }
+.cs-nav-btn:hover { background: var(--bg2); border-color: var(--dim); }
+
+footer { background: var(--bg); border-top: 1px solid var(--border); padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--dim); }
+.footer-logo { font-family: var(--serif); font-size: 18px; color: var(--text); font-style: italic; }
+
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .cs-hero { padding: 100px 20px 60px; }
+  .cs-meta-row { flex-direction: column; }
+  .cs-meta-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .cs-meta-item:last-child { border-bottom: none; }
+  .cs-results { grid-template-columns: 1fr 1fr; padding: 32px 20px; gap: 24px; }
+  .result-item { border-right: none; padding: 0; }
+  .cs-body { padding: 60px 20px; }
+  .context-grid { grid-template-columns: 1fr; }
+  .problem-stats { grid-template-columns: 1fr; }
+  .persona-inner { grid-template-columns: 1fr; }
+  .persona-avatar { height: 120px; }
+  .persona-card { grid-template-columns: 1fr; }
+  .persona-bio { grid-column: 1; }
+  .ust-header { grid-template-columns: 80px 1fr; }
+  .ust-header-cell.story, .ust-header-cell.criteria { display: none; }
+  .ust-row { grid-template-columns: 80px 1fr; }
+  .ust-cell.criteria-cell { display: none; }
+  .ns-grid { grid-template-columns: 1fr; gap: 12px; }
+  .ns-arrow { transform: rotate(90deg); }
+  .ns-inputs { flex-direction: row; flex-wrap: wrap; }
+  .before-after { grid-template-columns: 1fr; }
+  .result-cards { grid-template-columns: 1fr 1fr; }
+  .cs-nav-bottom { padding: 0 20px 60px; flex-direction: column; gap: 12px; }
+  footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Jevon.</a>
+  <a href="index.html#work" class="nav-back">&#8592; Back to Work</a>
+</nav>
+
+<!-- HERO -->
+<div class="cs-hero reveal">
+  <div class="cs-label">Case Study &mdash; Project Manager</div>
+  <h1 class="cs-title">Seller Onboarding<br><em>Flow Redesign</em></h1>
+  <p class="cs-tagline">60% of new sellers on Sirclo's multi-channel commerce platform failed to complete onboarding. As Project Manager, I coordinated cross-functional delivery of a redesigned flow that cut drop-off in half and doubled seller activation.</p>
+  <div class="cs-meta-row">
+    <div class="cs-meta-item"><div class="cs-meta-label">Company</div><div class="cs-meta-value">Sirclo Commerce</div></div>
+    <div class="cs-meta-item"><div class="cs-meta-label">My Role</div><div class="cs-meta-value">Project Manager (Simulation)</div></div>
+    <div class="cs-meta-item"><div class="cs-meta-label">Timeline</div><div class="cs-meta-value">Q1 2024 &mdash; 8 Weeks</div></div>
+    <div class="cs-meta-item"><div class="cs-meta-label">Domain</div><div class="cs-meta-value">Seller Growth / Activation</div></div>
+  </div>
+</div>
+
+<!-- RESULTS BAR -->
+<div class="cs-results reveal">
+  <div class="result-item"><div class="result-num">52%</div><div class="result-label">Drop-off Reduced</div></div>
+  <div class="result-item"><div class="result-num">2.1x</div><div class="result-label">Seller Activation</div></div>
+  <div class="result-item"><div class="result-num">+38%</div><div class="result-label">First Product Listed</div></div>
+  <div class="result-item"><div class="result-num">900+</div><div class="result-label">Active Sellers Q1</div></div>
+</div>
+
+<!-- BODY -->
+<div class="cs-body">
+
+  <!-- CONTEXT -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Context</div>
+    <h2 class="cs-section-title">About Sirclo</h2>
+    <div class="context-grid">
+      <div>
+        <p class="cs-p">Sirclo is an Indonesian commerce enabler that helps brands and SMEs sell across multiple online channels from a single platform. Sellers connect their stores to Tokopedia, Shopee, Lazada, TikTok Shop, and others through one unified dashboard.</p>
+        <p class="cs-p">In Q4 2023, a marketing push drove a spike in new seller registrations. The growth team expected a corresponding lift in activated sellers. Instead, activation numbers stayed flat. The problem was in onboarding.</p>
+      </div>
+      <div class="company-card">
+        <div class="company-name">Sirclo</div>
+        <div class="company-desc">Multi-channel commerce platform for Indonesian brands and SMEs</div>
+        <div class="company-facts">
+          <div class="fact-item"><div class="fact-label">Headquarters</div><div class="fact-value">Jakarta, Indonesia</div></div>
+          <div class="fact-item"><div class="fact-label">Founded</div><div class="fact-value">2013</div></div>
+          <div class="fact-item"><div class="fact-label">Industry</div><div class="fact-value">E-Commerce / SaaS</div></div>
+          <div class="fact-item"><div class="fact-label">Clients</div><div class="fact-value">500+ brands</div></div>
+          <div class="fact-item"><div class="fact-label">Channels Supported</div><div class="fact-value">Tokopedia, Shopee, Lazada, TikTok Shop</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- PROBLEM -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">The Problem</div>
+    <h2 class="cs-section-title">New sellers were leaving before they even started</h2>
+    <p class="cs-p">Mixpanel data showed that most sellers dropped off within the first three steps of the onboarding flow. They registered, hit the dashboard, and left. No products listed. No channels connected. No transactions made.</p>
+    <div class="problem-stats">
+      <div class="problem-stat">
+        <div class="problem-stat-num">60%</div>
+        <div class="problem-stat-label">of new sellers failed to complete onboarding in their first session</div>
+      </div>
+      <div class="problem-stat">
+        <div class="problem-stat-num">80%</div>
+        <div class="problem-stat-label">of those who dropped off never returned after their first session</div>
+      </div>
+      <div class="problem-stat">
+        <div class="problem-stat-num">&lt;12%</div>
+        <div class="problem-stat-label">conversion rate from registration to first product listed</div>
+      </div>
+      <div class="problem-stat">
+        <div class="problem-stat-num">3&ndash;5</div>
+        <div class="problem-stat-label">days average trial usage before abandoning (out of 30-day trial)</div>
+      </div>
+    </div>
+    <div class="hypothesis-box">
+      <p>"New sellers land on the dashboard and face a full product interface with no context, no clear next step, and no guided path. The cognitive load of seeing every feature at once kills the intent to continue."</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- TARGET AUDIENCE -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Target Audience</div>
+    <h2 class="cs-section-title">Who we are building for</h2>
+    <p class="cs-p">Based on 5 seller interviews and CRM data, the primary user is a small business owner managing 1&ndash;3 outlets who wants to expand into online channels but has limited technical experience.</p>
+    <div class="persona-wrap">
+      <div class="persona-inner">
+        <div class="persona-avatar">
+          <div class="persona-avatar-icon">👤</div>
+        </div>
+        <div class="persona-card">
+          <div class="persona-header">
+            <div>
+              <div class="persona-name">Budi</div>
+              <div class="persona-attrs">
+                <div class="persona-attr"><span class="persona-attr-icon">👤</span> 32 Years Old</div>
+                <div class="persona-attr"><span class="persona-attr-icon">📍</span> Tangerang, Banten</div>
+                <div class="persona-attr"><span class="persona-attr-icon">🏪</span> Food &amp; Beverage</div>
+                <div class="persona-attr"><span class="persona-attr-icon">💼</span> Business Owner &mdash; 2 Outlets</div>
+              </div>
+            </div>
+            <div class="persona-right">
+              <div class="tech-section">
+                <div class="tech-label">Tech Familiarity</div>
+                <div class="tech-row"><span class="tech-row-name">Online Shopping</span><div class="tech-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div></div>
+                <div class="tech-row"><span class="tech-row-name">Social Media</span><div class="tech-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div></div>
+                <div class="tech-row"><span class="tech-row-name">SaaS Tools</span><div class="tech-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+                <div class="tech-row"><span class="tech-row-name">Early Adopter</span><div class="tech-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="persona-bio">
+            <div class="bio-label">Bio</div>
+            <div class="bio-text">Saya pemilik usaha F&amp;B yang sedang mencari cara untuk memperluas penjualan secara online. Saya menemukan Sirclo dan ingin mencobanya untuk mengelola penjualan di Tokopedia dan Shopee sekaligus, karena selama ini saya kelola manual satu per satu.</div>
+          </div>
+          <div>
+            <div class="wants-section">
+              <div class="wants-label">Wants &amp; Needs</div>
+              <ul class="wants-list">
+                <li>Platform yang bisa manage semua channel dari satu tempat</li>
+                <li>Proses setup yang cepat dan tidak rumit</li>
+                <li>Laporan penjualan yang mudah dipahami</li>
+              </ul>
+            </div>
+            <div style="margin-top:16px">
+              <div class="frustrations-label">Frustrations</div>
+              <ul class="wants-list">
+                <li>Bingung harus mulai dari mana setelah masuk ke dashboard</li>
+                <li>Tidak ada panduan langkah demi langkah yang jelas</li>
+                <li>Terlalu banyak fitur yang muncul sekaligus</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- GOALS -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Goal &amp; Success Metrics</div>
+    <h2 class="cs-section-title">What success looks like</h2>
+    <p class="cs-p">Based on the problems detected in the onboarding process, the project needed clear goals and measurable success parameters before any solution work began.</p>
+    <div class="goal-tree">
+      <div class="goal-tree-root">
+        <div class="goal-root-box">Increase Active Sellers</div>
+      </div>
+      <div class="goal-tree-connector">
+        <div class="goal-branch">
+          <div class="goal-branch-line"></div>
+          <div class="goal-branch-arrow"></div>
+          <div class="goal-leaf">Seller enters the app successfully in first 5 actions</div>
+        </div>
+        <div class="goal-branch">
+          <div class="goal-branch-line"></div>
+          <div class="goal-branch-arrow"></div>
+          <div class="goal-leaf">Reduce 80% of seller drop-off on first app use</div>
+        </div>
+        <div class="goal-branch">
+          <div class="goal-branch-line"></div>
+          <div class="goal-branch-arrow"></div>
+          <div class="goal-leaf">Sellers can list their first product within 24 hours</div>
+        </div>
+        <div class="goal-branch">
+          <div class="goal-branch-line"></div>
+          <div class="goal-branch-arrow"></div>
+          <div class="goal-leaf">Seller uses the full 30-day trial period</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- USER STORY -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">User Story</div>
+    <h2 class="cs-section-title">Product backlog &amp; acceptance criteria</h2>
+    <p class="cs-p">I worked with the product owner to define user stories and acceptance criteria for each epic before sprint planning. This ensured engineering had clear, testable requirements from day one.</p>
+    <div class="user-story-table">
+      <div class="ust-header">
+        <div class="ust-header-cell epic">Backlog</div>
+        <div class="ust-header-cell epic">Epic</div>
+        <div class="ust-header-cell story">User Stories</div>
+        <div class="ust-header-cell criteria">User Acceptance Criteria</div>
+      </div>
+      <div class="ust-row">
+        <div class="ust-cell backlog" rowspan="4"><div class="backlog-label">Product Backlog</div></div>
+        <div class="ust-cell epic-cell">User Sign Up</div>
+        <div class="ust-cell story-cell">As a new seller, I want to be able to quickly sign up using my email or Google account, so I can start without a complicated process.</div>
+        <div class="ust-cell criteria-cell">If the seller's email has been validated, automatically redirect to the onboarding checklist page, not the raw dashboard.</div>
+      </div>
+      <div class="ust-row">
+        <div class="ust-cell backlog"></div>
+        <div class="ust-cell epic-cell">Onboarding Checklist</div>
+        <div class="ust-cell story-cell">As a new seller, I want a clear step-by-step guide when I first enter the app, so I know exactly what to do to start selling.</div>
+        <div class="ust-cell criteria-cell">Checklist must show 2 tasks: "Add First Product" and "Make First Transaction." Progress bar must update in real time as steps are completed.</div>
+      </div>
+      <div class="ust-row">
+        <div class="ust-cell backlog"></div>
+        <div class="ust-cell epic-cell">Product Catalog</div>
+        <div class="ust-cell story-cell">As a seller, I want to add, edit, and view my products quickly and easily, so I can manage my catalog without confusion.</div>
+        <div class="ust-cell criteria-cell">Product creation flow must be completable in 4 steps or fewer. Bulk upload must be supported via CSV for sellers with 10+ products.</div>
+      </div>
+      <div class="ust-row">
+        <div class="ust-cell backlog"></div>
+        <div class="ust-cell epic-cell">Channel Connect</div>
+        <div class="ust-cell story-cell">As a seller, I want to connect my Tokopedia and Shopee stores in one place, so I do not have to manage them separately.</div>
+        <div class="ust-cell criteria-cell">Channel connection must be completable in under 3 minutes with OAuth. Connection status must be clearly shown on the dashboard at all times.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- NORTH STAR -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">North Star Metrics</div>
+    <h2 class="cs-section-title">How we measured what mattered</h2>
+    <p class="cs-p">I built a North Star Metrics framework to align the team on which numbers actually reflected seller success, not just surface-level activity.</p>
+    <div class="north-star">
+      <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center;">
+        <div>
+          <div class="ns-label">Input Metrics</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="ns-box input">New Seller Registrations</div>
+            <div class="ns-box input">Returning Sellers</div>
+            <div class="ns-box input">Channel Connection Rate</div>
+          </div>
+        </div>
+        <div class="ns-arrow">&#8594;</div>
+        <div>
+          <div class="ns-label">Output Metric</div>
+          <div class="ns-box output">Number of Active Sellers<br><small style="font-weight:300;font-size:12px;opacity:0.8">Sellers who list product + make 1 transaction</small></div>
+        </div>
+        <div class="ns-arrow">&#8594;</div>
+        <div>
+          <div class="ns-label">Outcome Metric</div>
+          <div class="ns-box outcome">Subscription<br>Conversion Rate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SOLUTION -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Solution</div>
+    <h2 class="cs-section-title">A guided, 3-phase delivery plan</h2>
+    <p class="cs-p">As Project Manager, I scoped the solution into three deliverable phases, each with its own sprint, clear acceptance criteria, and usability test cycle. This let us validate early and adjust before committing to full build.</p>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">MVP 1</div>
+        <div>
+          <div class="step-content-title">First Impression &mdash; "The Great Getting Started"</div>
+          <div class="step-content-desc">Added a push notification trigger post-download. Redesigned the authentication page to present only 2 choices (Sign Up / Sign In) instead of 8. Introduced a business-type selector so the platform could personalise the experience from the first step. Sprint duration: 2 weeks.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">MVP 2</div>
+        <div>
+          <div class="step-content-title">Guided Dashboard &mdash; "The Beginning of Comfort"</div>
+          <div class="step-content-desc">Replaced the raw dashboard with a guided onboarding checklist for first-time sellers. Two tasks shown: "Add First Product" and "Make First Transaction." Progress bar updates in real time. Returning sellers see a personalised welcome and quick-access shortcuts. Sprint duration: 2 weeks.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">MVP 3</div>
+        <div>
+          <div class="step-content-title">Transaction Confidence &mdash; "Eternal Love"</div>
+          <div class="step-content-desc">Redesigned the transaction flow end-to-end. Product catalog, item counter, order summary, and payment selection consolidated into 4 screens (down from 8). Promo visibility added inline. Contextual tooltips added for first-time users at every decision point. Sprint duration: 2 weeks.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- BEFORE AFTER -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Before &amp; After</div>
+    <h2 class="cs-section-title">What changed</h2>
+    <div class="before-after">
+      <div class="ba-col before">
+        <div class="ba-label before">Before</div>
+        <ul class="ba-list before">
+          <li>No guidance after login &mdash; sellers faced the full dashboard immediately</li>
+          <li>8+ choices presented on the authentication page</li>
+          <li>No onboarding checklist or progress state</li>
+          <li>12 steps required to complete a first transaction</li>
+          <li>Error messages were generic and unhelpful</li>
+          <li>No business-type personalisation</li>
+          <li>60% of sellers dropped off in first session</li>
+        </ul>
+      </div>
+      <div class="ba-col after">
+        <div class="ba-label after">After</div>
+        <ul class="ba-list after">
+          <li>Guided checklist shown on first login with 2 clear next steps</li>
+          <li>Authentication reduced to 2 primary actions</li>
+          <li>Progress bar tracks completion in real time</li>
+          <li>First transaction completable in 4 steps</li>
+          <li>Error messages rewritten to be specific and recovery-focused</li>
+          <li>Business-type selector personalises the dashboard from step one</li>
+          <li>52% reduction in drop-off, 2.1x activation rate</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- HOW I MANAGED -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Project Management</div>
+    <h2 class="cs-section-title">How I ran the project</h2>
+    <ul class="checklist">
+      <li>Defined the full project scope, timeline, and sprint structure across 3 two-week cycles in week 1</li>
+      <li>Wrote the Project Requirements Document (PRD) covering problem statement, goals, user stories, acceptance criteria, and out-of-scope items</li>
+      <li>Facilitated two design sprints with the UI/UX team to generate and evaluate solution concepts before committing to build</li>
+      <li>Built and maintained the product backlog in Jira, prioritised with MoSCoW framework, and ran daily standups throughout each sprint</li>
+      <li>Coordinated dependencies between design, frontend, and backend teams to prevent blockers from delaying sprint deliverables</li>
+      <li>Organised usability testing with 6 real sellers per MVP phase, synthesised findings into iteration briefs for the next sprint</li>
+      <li>Reported sprint progress and key metrics to stakeholders in weekly reviews, adjusting scope when necessary to protect the launch date</li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+
+  <!-- RESULTS -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Results</div>
+    <h2 class="cs-section-title">Outcomes after full delivery</h2>
+    <div class="result-cards">
+      <div class="result-card"><div class="result-card-num">52%</div><div class="result-card-label">Reduction in onboarding drop-off</div></div>
+      <div class="result-card"><div class="result-card-num">2.1x</div><div class="result-card-label">Increase in seller activation rate</div></div>
+      <div class="result-card"><div class="result-card-num">+38%</div><div class="result-card-label">First product listed within 24h</div></div>
+      <div class="result-card"><div class="result-card-num">900+</div><div class="result-card-label">Active sellers by Q1 2024</div></div>
+      <div class="result-card"><div class="result-card-num">+20%</div><div class="result-card-label">Subscription conversion uplift</div></div>
+      <div class="result-card"><div class="result-card-num">4</div><div class="result-card-label">Steps to first transaction (from 12)</div></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- LEARNINGS -->
+  <div class="cs-section reveal">
+    <div class="cs-section-label">Learnings</div>
+    <h2 class="cs-section-title">What I took away</h2>
+    <div class="learnings-box">
+      <div class="learning-item">
+        <div class="learning-title">Define acceptance criteria before writing a single line of code</div>
+        <div class="learning-desc">Every feature we built had a clear, testable acceptance criterion agreed upon before the sprint started. This eliminated ambiguity, reduced rework, and gave engineering a shared definition of done.</div>
+      </div>
+      <div class="learning-item">
+        <div class="learning-title">Scope creep is a project manager's primary enemy</div>
+        <div class="learning-desc">Stakeholders repeatedly requested new features mid-sprint. I created a formal change request process with a one-week delay rule. This kept each MVP on schedule while still capturing good ideas for the next phase.</div>
+      </div>
+      <div class="learning-item">
+        <div class="learning-title">Ship in phases, validate fast, adjust accordingly</div>
+        <div class="learning-desc">Breaking the redesign into three MVPs let us validate assumptions with real sellers before building the full system. MVP 1 findings directly reshaped the scope of MVP 2, saving two full weeks of build time.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="cs-nav-bottom">
+  <a href="index.html#work" class="cs-nav-btn">&#8592; All Projects</a>
+  <a href="case-aiesec.html" class="cs-nav-btn">Next: AIESEC &#8594;</a>
+</div>
+
+<footer>
+  <div class="footer-logo">Jevon.</div>
+  <div>Bandung, Indonesia &middot; 2026</div>
+  <div>j3vonsebastian@gmail.com</div>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.05 });
+reveals.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
