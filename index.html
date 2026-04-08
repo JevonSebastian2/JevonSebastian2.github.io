@@ -60,15 +60,15 @@ nav.scrolled {
   background: radial-gradient(ellipse 80% 60% at 50% 0%, #e8ddd0 0%, var(--bg) 65%);
 }
 .hero-photo-wrap {
-  width: 110px; height: 110px;
-  border-radius: 50%;
+  width: 180px; height: 240px;
+  border-radius: 120px;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   border: 3px solid var(--surface);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12);
   opacity: 0; animation: fadeUp 0.6s ease forwards 0.1s;
 }
-.hero-photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.hero-photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center 10%; }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 7px;
   padding: 7px 16px;
@@ -163,10 +163,10 @@ section { padding: 96px 48px; }
   grid-template-columns: 1fr auto;
   gap: 40px;
   align-items: center;
-  transition: box-shadow 0.25s, transform 0.25s;
-  text-decoration: none; color: inherit;
+  transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+  text-decoration: none; color: inherit; cursor: pointer;
 }
-.case-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); transform: translateY(-2px); }
+.case-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); border-color: var(--dim); }
 .case-tag {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
@@ -178,10 +178,18 @@ section { padding: 96px 48px; }
   font-weight: 400; line-height: 1.2; margin-bottom: 10px;
 }
 .case-desc { font-size: 14px; color: var(--muted); line-height: 1.65; max-width: 560px; font-weight: 300; }
-.case-metrics { display: flex; gap: 32px; flex-shrink: 0; }
+.case-right { display: flex; flex-direction: column; align-items: flex-end; gap: 24px; flex-shrink: 0; }
+.case-metrics { display: flex; gap: 32px; }
 .metric { text-align: center; }
 .metric-num { font-family: var(--serif); font-size: 32px; color: var(--text); line-height: 1; margin-bottom: 4px; }
 .metric-label { font-size: 11px; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+.case-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 500; color: var(--text);
+  border: 1px solid var(--border); border-radius: 100px;
+  padding: 8px 18px; transition: background 0.2s, border-color 0.2s; white-space: nowrap;
+}
+.case-card:hover .case-cta { background: var(--text); color: #fff; border-color: var(--text); }
 
 /* SKILLS */
 .skills { background: var(--bg2); }
@@ -328,7 +336,7 @@ footer {
   <p class="hero-desc">Turning ambiguous problems into shipped results. Currently leading teams and managing projects at AIESEC, with hands-on experience in QA, finance, and product operations.</p>
   <div class="hero-actions">
     <a href="#work" class="btn-dark">View My Work</a>
-    <a href="mailto:j3vonsebastian@gmail.com" class="btn-outline">Send Email</a>
+    <a href="/cdn-cgi/l/email-protection#6c065f1a03021f090e0d1f18050d022c0b010d0500420f0301" class="btn-outline">Send Email</a>
   </div>
 </section>
 
@@ -371,50 +379,62 @@ footer {
     </div>
   </div>
   <div class="case-cards">
-    <div class="case-card reveal">
+    <a href="case-sirclo.html" class="case-card reveal">
+      <div>
+        <div class="case-tag">Product Management</div>
+        <div class="case-title">Seller Onboarding Flow Redesign &mdash; Sirclo</div>
+        <p class="case-desc">60% of new sellers failed to complete onboarding in their first session. I led the discovery, PRD, and delivery of a redesigned onboarding flow that cut drop-off by half and increased seller activation across Sirclo's commerce platform.</p>
+      </div>
+      <div class="case-right">
+        <div class="case-metrics">
+          <div class="metric"><div class="metric-num">52%</div><div class="metric-label">Drop-off Reduced</div></div>
+          <div class="metric"><div class="metric-num">2.1x</div><div class="metric-label">Activation Rate</div></div>
+        </div>
+        <span class="case-cta">View Case Study &rarr;</span>
+      </div>
+    </a>
+    <a href="case-aiesec.html" class="case-card reveal">
       <div>
         <div class="case-tag">Project Management</div>
-        <div class="case-title">AIESEC Local Committee President</div>
-        <p class="case-desc">Led the entire AIESEC Bandung entity of 102 members across 9 departments. Built partnerships with 20+ media organizations and supervised 4+ organizational projects end-to-end from planning to execution.</p>
+        <div class="case-title">AIESEC Bandung &mdash; Local Committee President</div>
+        <p class="case-desc">Led a 102-member organization across 9 departments. Oversaw full financial operations generating Rp 281M+ in revenue, built 20+ media partnerships, and delivered 4+ organizational projects end-to-end.</p>
       </div>
-      <div class="case-metrics">
-        <div class="metric"><div class="metric-num">102</div><div class="metric-label">Members Led</div></div>
-        <div class="metric"><div class="metric-num">9</div><div class="metric-label">Departments</div></div>
+      <div class="case-right">
+        <div class="case-metrics">
+          <div class="metric"><div class="metric-num">102</div><div class="metric-label">Members Led</div></div>
+          <div class="metric"><div class="metric-num">Rp 281M</div><div class="metric-label">Revenue</div></div>
+        </div>
+        <span class="case-cta">View Case Study &rarr;</span>
       </div>
-    </div>
-    <div class="case-card reveal">
+    </a>
+    <a href="case-bylc.html" class="case-card reveal">
       <div>
-        <div class="case-tag">Finance & Operations</div>
-        <div class="case-title">Head of Finance, Governance & Legality</div>
-        <p class="case-desc">Oversaw full financial operations of AIESEC Bandung across all projects and initiatives. Maintained a MoCR of 3+, achieved B-grade audit compliance, and led revenue strategy that generated Rp 281M+ in total income.</p>
+        <div class="case-tag">Event &amp; Delivery Management</div>
+        <div class="case-title">Bandung Youth Leadership Conference</div>
+        <p class="case-desc">Managed 4 departments and 12 team members to deliver a high-impact youth conference. Achieved a 9% Gross Profit Margin, generating Rp 20.4M in revenue against Rp 18.6M in expenses.</p>
       </div>
-      <div class="case-metrics">
-        <div class="metric"><div class="metric-num">Rp 281M</div><div class="metric-label">Revenue Led</div></div>
-        <div class="metric"><div class="metric-num">3+</div><div class="metric-label">MoCR Maintained</div></div>
+      <div class="case-right">
+        <div class="case-metrics">
+          <div class="metric"><div class="metric-num">9%</div><div class="metric-label">GPM</div></div>
+          <div class="metric"><div class="metric-num">12</div><div class="metric-label">Team Members</div></div>
+        </div>
+        <span class="case-cta">View Case Study &rarr;</span>
       </div>
-    </div>
-    <div class="case-card reveal">
-      <div>
-        <div class="case-tag">Event & Delivery</div>
-        <div class="case-title">Bandung Youth Leadership Conference Manager</div>
-        <p class="case-desc">Managed 4 departments and 12 team members for a high-impact youth leadership conference. Delivered the event with a 9% Gross Profit Margin, generating Rp 20.4M in revenue against Rp 18.6M in expenses.</p>
-      </div>
-      <div class="case-metrics">
-        <div class="metric"><div class="metric-num">9%</div><div class="metric-label">Gross Profit Margin</div></div>
-        <div class="metric"><div class="metric-num">12</div><div class="metric-label">Team Members</div></div>
-      </div>
-    </div>
-    <div class="case-card reveal">
+    </a>
+    <a href="case-agate.html" class="case-card reveal">
       <div>
         <div class="case-tag">Quality Assurance</div>
-        <div class="case-title">QA Intern — PT Agate International</div>
-        <p class="case-desc">Conducted comprehensive testing across 3+ ported game titles. Identified 40+ bugs and executed 60+ manual test cases covering gameplay, UI/UX, audio, graphics, and platform compliance. Worked within an Agile framework using Jira.</p>
+        <div class="case-title">Game Porting QA &mdash; PT Agate International</div>
+        <p class="case-desc">Tested 3+ ported game titles end-to-end for cross-platform compatibility. Identified 40+ bugs and executed 60+ manual test cases covering gameplay, UI/UX, audio, graphics, and platform compliance using Jira and Agile.</p>
       </div>
-      <div class="case-metrics">
-        <div class="metric"><div class="metric-num">40+</div><div class="metric-label">Bugs Tracked</div></div>
-        <div class="metric"><div class="metric-num">60+</div><div class="metric-label">Test Cases Run</div></div>
+      <div class="case-right">
+        <div class="case-metrics">
+          <div class="metric"><div class="metric-num">40+</div><div class="metric-label">Bugs Found</div></div>
+          <div class="metric"><div class="metric-num">60+</div><div class="metric-label">Test Cases</div></div>
+        </div>
+        <span class="case-cta">View Case Study &rarr;</span>
       </div>
-    </div>
+    </a>
   </div>
 </section>
 
@@ -631,7 +651,7 @@ footer {
     <h2 class="contact-title">Let's work <em>together.</em></h2>
     <p class="contact-sub">Open to Project Manager, Product Manager, and related roles. Also happy to discuss collaborations, consulting, or just connect over coffee.</p>
     <div class="contact-btns">
-      <a href="mailto:j3vonsebastian@gmail.com" class="btn-dark">✉ Email Me</a>
+      <a href="/cdn-cgi/l/email-protection#422871342d2c3127202331362b232c02252f232b2e6c212d2f" class="btn-dark">✉ Email Me</a>
       <a href="https://linkedin.com/in/jevonsebastian/" target="_blank" class="btn-outline">LinkedIn</a>
       
     </div>
@@ -642,10 +662,10 @@ footer {
 <footer>
   <div class="footer-logo">Jevon Sebastian.</div>
   <div>Bandung, Indonesia · 2026</div>
-  <div>j3vonsebastian@gmail.com</div>
+  <div><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="19732a6f76776a7c7b786a6d707877597e74787075377a7674">[email&#160;protected]</a></div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Nav scroll
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
@@ -671,16 +691,4 @@ function toggleExp(row) {
 
 // Service accordion
 function toggleService(item) {
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.service-item').forEach(el => {
-    el.classList.remove('open');
-    el.querySelector('.service-chevron').textContent = '›';
-  });
-  if (!isOpen) {
-    item.classList.add('open');
-    item.querySelector('.service-chevron').textContent = '∨';
-  }
-}
-</script>
-</body>
-</html>
+  const isOpen = item.classL
